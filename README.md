@@ -3,8 +3,7 @@
 
  
  	Courtesy to Prof. Takuya Ooura
- 	Library for computation of speial functions
- 	and numerical integration
+ 	Library for numerical integration
  	
 The code is based in mostly on
   http://www.kurims.kyoto-u.ac.jp/~ooura/intde.html
