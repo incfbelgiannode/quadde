@@ -58,7 +58,6 @@
 	(multiple-value-bind ( i err )
 		(quadde::intdei (float-integrand-or-lose '$quad_intdei fun var)
 			 (float-or-lose a)
-;			 (float-or-lose b)
 			 (float-or-lose epsrel)
 			 (float-or-lose epsabs)
 		)
