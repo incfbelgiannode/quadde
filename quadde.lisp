@@ -42,7 +42,7 @@
 	  (error (e)
 	(when *debug-quadde*
 	  (format t "~S" e))
-	`(($quad_qag) ,fun ,var ,a ,b 
+	`(($quad_intde) ,fun ,var ,a ,b 
 	  ((mequal) $epsrel ,epsrel)
 	  ((mequal) $epsabs ,epsabs)
 	 )
@@ -67,7 +67,7 @@
 	  (error (e)
 	(when *debug-quadde*
 	  (format t "~S" e))
-	`(($quad_qag) ,fun ,var ,a 
+	`(($quad_intdei) ,fun ,var ,a 
 	  ((mequal) $epsrel ,epsrel)
 	  ((mequal) $epsabs ,epsabs)
 	 )
@@ -93,7 +93,7 @@
 	  (error (e)
 	(when *debug-quadde*
 	  (format t "~S" e))
-	`(($quad_qag) ,fun ,var ,a ,omega 
+	`(($quad_intdeo) ,fun ,var ,a ,omega 
 	  ((mequal) $epsrel ,epsrel)
 	  ((mequal) $epsabs ,epsabs)
 	 )
