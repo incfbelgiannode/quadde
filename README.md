@@ -1,4 +1,4 @@
-# quadde
+# quadde for Maxima
  Double exponential integration for Maxima
 
  
