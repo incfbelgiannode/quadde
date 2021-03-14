@@ -31,12 +31,15 @@
 ;;;           (:array-slicing t) (:declare-common nil)
 ;;;           (:float-format single-float))
 
+
 (defpackage :quadde
-   (:use :common-lisp maxima)
-   (:export :intde :intdei :intdeo)
+   (:use :common-lisp :maxima)
+   (:export :intde :intdei :intdeo :isnan)
 )
 
 (in-package :quadde)
+
+(defun isnan (x)  (and (not (=   x  x))  ( typep x 'double-float) ))
 
 ; intde computes the  integral of f(x) over (a,b)
 ;
@@ -81,6 +84,13 @@
     (setf wg (* xa (- 1 xw)))
     (setf fa (* (funcall f (+ a xa)) wg))
     (setf fb (* (funcall f (- b xa)) wg))
+	; check for nan
+	(if (isnan fa)
+		(setf fa 0.0d0))
+	(if (isnan fb)
+		(setf fb 0.0d0))
+;	(cond ( (or (isnan fp) (isnan fm) )
+;	  (maxima::merror "Terminal not a number ~M , ~M" fp fm)))
     (setf ir (+ ir (+ fa fb)))
     (setf i (+ i (* (+ fa fb) (+ ep em))))
     (setf errt (* (+ (abs fa) (abs fb)) (+ ep em)))
@@ -185,6 +195,13 @@
     (setf xm (/ 1 xp))
     (setf fp (* (funcall f (+ a xp)) xp))
     (setf fm (* (funcall f (+ a xm)) xm))
+		; check for nan
+	(if (isnan fp)
+		(setf fp 0.0d0))
+	(if (isnan fm)
+		(setf fm 0.0d0))
+;	(cond ( (or (isnan fp) (isnan fm) )
+;	  (maxima::merror "Terminal not a number ~M , ~M" fp fm)))
     (setf ir (+ ir (+ fp fm)))
     (setf i (+ i (* (+ fp fm) (+ ep em))))
     (setf errt (* (+ (abs fp) (abs fm)) (+ ep em)))
@@ -302,6 +319,14 @@
     (setf wg (/ (+ (* pq xw (- ep em)) xa) wg))
     (setf fm (funcall f (+ a xa)))
     (setf fp (funcall f (+ a xa (* per2 tk))))
+	; check for nan
+	(if (isnan fp)
+		(setf fp 0.0d0))
+	(if (isnan fm)
+		(setf fm 0.0d0))
+;	(cond ( (or (isnan fp) (isnan fm) )
+;	  (maxima::merror "Terminal not a number ~M , ~M" fp fm)))
+		
     (setf ir (+ ir (* (+ fp fm) xw)))
     (setf fm (* fm wg))
     (setf fp (* fp (- per2 wg)))

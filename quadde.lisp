@@ -19,10 +19,14 @@
 (in-package :maxima)
 
 (defvar *debug-quadde*
-  nil
+  NIL
   "Set to non-NIL to enable printing of the error object when the
   intde routines throw an error.")
-	   
+
+(defun coerce-float-d (x) 
+	 (coerce (maxima::$float (maxima::meval* x)) 'double-float)
+)
+
 ;; error checking similar to that done by $defint
 ;; we don't really need to simplify 
 (defun quadde_argument_check (expr var ll ul) 
@@ -40,9 +44,10 @@
 		 var expr)))		  
    (cond ((or (among var ul) (among var ll))
 	  (merror "Terminal contains variable of integration: ~M" var)))
-   (cond ((not (and ($numberp (coerce-float ul)) ($numberp (coerce-float ll))))
+   (cond ((not (and ($numberp (coerce-float-d ul)) ($numberp (coerce-float-d ll))))
 	  (merror "Terminal not a number ~M , ~M" ll ul)))
 )  
+
 
 
 
@@ -126,11 +131,13 @@
 	   (error (e)
 	 (when *debug-quadde*
 	   (format t "~S" e))
-	 `(($quad_intde) ,fun ,var ,a ,omega 
+	 `(($quad_intdeo) ,fun ,var ,a ,omega 
 	   ((mequal) $epsrel ,epsrel)
 	   ((mequal) $epsabs ,epsabs)
 	  )
 	  ))
 	 )
 )
+
+
 	  
