@@ -1,6 +1,8 @@
 ;;; Maxima interface to double exponential integration
 ;;  
 ; (c) Dimiter Prodanov
+; version 1.1.1 6 Oct 2022
+; - change in quad_intdeo
 ; version 1.1 13 March 2021
 ; - change in condition checking
 ; - compatibilty with Maxima 44
@@ -8,7 +10,7 @@
 ; updates in quadde_argument_check
 ; input from Michel Talon
 ;
-;* M.Mori, Developments in the double exponential formula for numerical integration, Proceedings of the International Congress of Mathematicians, Kyoto 1990, 1991, Springer-Verlag, 1585-1594.
+; * M.Mori, Developments in the double exponential formula for numerical integration, Proceedings of the International Congress of Mathematicians, Kyoto 1990, 1991, Springer-Verlag, 1585-1594.
 ; * H.Takahasi and M.Mori, Double exponential formulas for numerical integration, Pub. RIMS Kyoto Univ. 9, 1974, 721-741
 ; * T.Ooura and M.Mori, The Double exponential formula for oscillatory functions over the half infinite interval, Journal of Computational and Applied Mathematics 38, 1991, 353-360
 ; * M.Mori and T.Ooura, Double exponential formulas for Fourier type integrals with a divergent integrand, Contributions in Numerical Mathematics, ed. R.P.Agarwal, World Scientific Series in Applicable Analysis, 2, 1993, 301-308
@@ -50,7 +52,7 @@
 
 
 
-
+;; wrapper around intde
 (defmfun $quad_intde (fun var a b &key
 		 (epsrel 1e-8)
 		 (epsabs 0.0))
@@ -80,7 +82,7 @@
 	 )
 )
  
-
+;; wrapper around intdei
 (defmfun $quad_intdei (fun var a  &key
 		 (epsrel 1e-8)
 		 (epsabs 0.0))
@@ -108,8 +110,8 @@
 	  ))
 	 )
 )
-  
-
+ 
+;; wrapper around intdeo
 (defmfun $quad_intdeo (fun var a omega &key
 		 (epsrel 1e-8)
 		 (epsabs 0.0))
@@ -122,7 +124,7 @@
 	(multiple-value-bind ( i err )
 		(quadde::intdeo  #'ff
 			 (float-or-lose a)
-			 (float-or-lose omega)
+			 (coerce-float-d omega)
 			 (float-or-lose epsrel)
 			 (float-or-lose epsabs)
 		)
