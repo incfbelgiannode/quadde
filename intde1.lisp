@@ -2,7 +2,7 @@
 ; 	Library for computation of speial functions
 ; 	and numerical integration
 ; 	
-; The code is based in mostly on
+; The code is based mostly on
 ; http://www.kurims.kyoto-u.ac.jp/~ooura/intde.html
 ;  for the tanh-sinh (double exponential) method
 ;  
@@ -325,7 +325,7 @@
 	(if (isnan fm)
 		(setf fm 0.0d0))
 ;	(cond ( (or (isnan fp) (isnan fm) )
-;	  (maxima::merror "Terminal not a number ~M , ~M" fp fm)))
+;	  (maxima::merror "Function does not return a number ~M , ~M" fp fm)))
 		
     (setf ir (+ ir (* (+ fp fm) xw)))
     (setf fm (* fm wg))
