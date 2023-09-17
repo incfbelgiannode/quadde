@@ -1,6 +1,8 @@
 ;;; Maxima interface to double exponential integration
 ;;  
 ; (c) Dimiter Prodanov
+; version 1.1.2 17 Sept 2023
+; - new condition in quadde_argument_check
 ; version 1.1.1 6 Oct 2022
 ; - change in quad_intdeo
 ; version 1.1 13 March 2021
@@ -41,7 +43,7 @@
   (cond ( (not (atom var))
 	 (merror "Variable of integration: ~M  not an atom"
 		 var)))	
-  (cond (($freeof var expr)
+  (cond ( (and  ($freeof var expr) (not (= 0.0 expr ) ) )
 	 (merror "Variable ~M not in ~M"
 		 var expr)))		  
    (cond ((or (among var ul) (among var ll))
@@ -49,7 +51,6 @@
    (cond ((not (and ($numberp (coerce-float-d ul)) ($numberp (coerce-float-d ll))))
 	  (merror "Terminal not a number ~M , ~M" ll ul)))
 )  
-
 
 
 ;; wrapper around intde
